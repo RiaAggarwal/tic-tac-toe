@@ -1,8 +1,8 @@
 #include <iostream>
 
-void DrawBoard();
-void GetInput();
-int CheckWinner();
+void GetBoard();
+void GetPosition();
+int GetWinner();
 
 const int X = 1;		// Player 1
 const int O = 2;		// Player 2
@@ -19,21 +19,21 @@ int main()
 
 	while (winner==NO_WINNER) //run the loop till a draw or a winner is declared
 	{
-		DrawBoard();
-		GetInput();
+		GetBoard();
+		GetPosition();
 		turns++;
-		winner = CheckWinner();
+		winner = GetWinner();
 		if(winner==NO_WINNER && turns==9) winner=DRAW;
 		if(player==X) player=O; else player=X;	// change the player
 	}
-	DrawBoard();
+	GetBoard();
 	if (winner == DRAW)
 		std::cout << "It's a DRAW!\n";
 	else
 		std::cout << "CONGRATULATIONS Player " << winner << "!\nYou win!\n";
 }
 
-void DrawBoard()
+void GetBoard()
 {
 	std::cout
 		<< " " << board[0] << " | " << board[1] << " | " << board[2] << " \n"
@@ -43,7 +43,7 @@ void DrawBoard()
 		<< " " << board[6] << " | " << board[7] << " | " << board[8] << " \n";
 }
 
-void GetInput()
+void GetPosition()
 {
 	int position;
 
@@ -54,13 +54,13 @@ void GetInput()
 		position--;
 		if (position < 0 || position > 8)
 		{
-			DrawBoard();
+			GetBoard();
 			std::cout << "This position is INVALID. TRY again...\n";
 			continue;
 		}
 		else if (board[position] == 'X' || board[position] == 'O')
 		{
-			DrawBoard();
+			GetBoard();
 			std::cout << "This position is NOT AVAILABLE. TRY again...\n";
 			continue;
 		}
@@ -71,7 +71,7 @@ void GetInput()
 	else board[position] = 'X';
 }
 
-int CheckWinner()
+int GetWinner()
 {
 	// Check all the Row//
 	if (board[0] == board[1] && board[1] == board[2]) return player;
